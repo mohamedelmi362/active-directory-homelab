@@ -168,4 +168,4 @@ PowerShell provides programmatic verification of AD changes. Rather than clickin
 
 This is how enterprise admins work at scale—PowerShell automation rather than manual clicks.
 
-![Verification](./images/verify.png)
+
