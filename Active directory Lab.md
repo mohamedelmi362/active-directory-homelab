@@ -1,5 +1,5 @@
+<img width="1553" height="802" alt="image" src="https://github.com/user-attachments/assets/8d916730-ded3-40e3-b59a-569bb65460e3" />
 
-![[Screenshot 2026-03-07 125345.png]]
 ### Step 1: Creating the Virtual Machine
 **What I Did:**
 - Created a new VirtualBox VM named "DC01" (Domain Controller 01)
