@@ -68,7 +68,7 @@
 - Department-specific security policies
 This is the foundation for role-based access control (RBAC).
 ![[setting-password-policy.png]]
-### Step 12: Setting Password Policy
+### Step 8: Setting Password Policy
 **What I Did:**
 - Opened "Group Policy Management Editor"
 - Navigated to: Default Domain Policy → Computer Configuration → Windows Settings → Security Settings → Account Policies → Password Policy
