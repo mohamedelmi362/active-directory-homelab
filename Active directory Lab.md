@@ -8,9 +8,10 @@
 - Configured boot order: Floppy, Optical, Hard Disk
 **My Thinking:** I needed a dedicated VM for the domain controller that would serve as the central authentication point. The name DC01 follows enterprise naming conventions. I allocated sufficient resources (4GB RAM) for Active Directory services to run smoothly.
 
-![[adding-iso-file.png]]
-![[installing-windows.png]]
-![[installingwindows.png]]
+<img width="1536" height="796" alt="image" src="https://github.com/user-attachments/assets/a2579900-4bc3-42a3-bb39-93400c018cb5" />
+<img width="1047" height="888" alt="image" src="https://github.com/user-attachments/assets/4397b9cc-4a86-4735-a2f2-563447f114ab" />
+<img width="880" height="709" alt="image" src="https://github.com/user-attachments/assets/f0e3b2a2-cce2-446c-814b-2840838825d7" />
+
 ### Step 2: Installing Windows Server Operating System
 **What I Did:**
 - Inserted Windows Server 2022 ISO into the virtual optical drive
@@ -18,16 +19,16 @@
 - Selected "Windows Server 2022 Standard Evaluation" for installation
 - Completed the OS installation
 **My Thinking:** I chose Windows Server 2022 Standard because it's current and includes all necessary AD services. The Standard edition is sufficient for a home lab (Enterprise is overkill for learning purposes). The installation process is straightforward—mount ISO, boot, select OS variant, and let it install. I had extreme troubles booting the iso file, but after further evaluations I realized i downloaded only the core and not the Gui itself. After downloading the correct download, everything went smoothly.
-![[configuering-network.png]]
-![[cofiguering-dns.png]]
+<img width="959" height="1014" alt="image" src="https://github.com/user-attachments/assets/6feab598-4c81-41a2-8b68-bab2400b9fbb" />
+<img width="1025" height="876" alt="image" src="https://github.com/user-attachments/assets/d4bf4826-e6a9-47c6-924e-d952a6a38e6a" />
 ### Step 3: Setting Static IP Address & DNS Configuration
 **What I Did:**
 - Configured static IP, Set Default Gateway, Set DNS
 **The Problem:** After configuration, the ping failed with "Destination host unreachable." My IP settings were perfect, but the VM couldn't reach the network.
 **The Fix:** The issue wasn't my DNS/IP config—it was VirtualBox's bridged adapter. I was bridging to the wrong physical network adapter. I changed VirtualBox Settings → Network to use **"Ethernet adapter 3"** (the actual adapter my host uses), then ran `ipconfig /renew`, and ping worked immediately.
 **My Thinking:** This taught me that network troubleshooting has layers. The VM's settings were correct, but the hypervisor wasn't connected to the right physical port. On machines with multiple adapters, you have to explicitly tell VirtualBox which one to use.
-![[installing-AD.png]]
-![[dns-to-router.png]]
+<img width="1007" height="878" alt="image" src="https://github.com/user-attachments/assets/db8791ad-e27c-4855-989c-d7d54b8c4f86" />
+<img width="1017" height="865" alt="image" src="https://github.com/user-attachments/assets/1cfdcd9a-c771-49bd-b99a-f1e704677732" />
 ### Step 4: Installing Active Directory Domain Services
 **What I Did:**
 - Opened Server Manager
@@ -43,8 +44,8 @@
 - Configured NetBIOS name
 - Promoted the server to Domain Controller
 **My Thinking:** A fresh forest is appropriate for a home lab—I'm not joining an existing corporate domain. `lab.local` is a standard private domain name (TLD reserved for testing). The functional level determines what features are available; 2016+ supports modern security features.
-![[hr-team.png]]
-![[created-users-groups.png]]
+<img width="1014" height="878" alt="image" src="https://github.com/user-attachments/assets/a933334e-1544-48f0-832a-8e40aa06a4c5" />
+<img width="998" height="873" alt="image" src="https://github.com/user-attachments/assets/1fb83174-1ed8-4364-b0e8-904d32746303" />
 ### Step 6: Creating Organizational Units (OUs)
 **What I Did:**
 - Opened "Active Directory Users and Computers"
@@ -53,8 +54,8 @@
 - HR-Team (for HR department)
 - IT-Helpdesk (for IT support staff)
 **My Thinking:** Organizational Units allow logical grouping of users for policy application and delegation. Rather than dumping all users in the default "Users" container, I created departmental OUs. This mimics real enterprise structure where different departments have different security policies and access levels.
-![[assigning-roles-johndoe.png]]
-![[assigning-role-asmith.png]]
+<img width="1019" height="885" alt="image" src="https://github.com/user-attachments/assets/2e77968c-8dde-49d7-a9a0-37ee640997ac" />
+<img width="1003" height="879" alt="image" src="https://github.com/user-attachments/assets/c0243adb-0de8-4385-9ed0-1c3af300fec3" />
 ### Step 7: Adding Users to Groups
 **What I Did:**
 - Selected the "HR-Team" group
@@ -67,7 +68,7 @@
 - Permissions on shared folders assigned to "HR-Team"
 - Department-specific security policies
 This is the foundation for role-based access control (RBAC).
-![[setting-password-policy.png]]
+<img width="1007" height="876" alt="image" src="https://github.com/user-attachments/assets/88c815fb-9574-4a99-8cf7-2dd842e6b3cc" />
 ### Step 8: Setting Password Policy
 **What I Did:**
 - Opened "Group Policy Management Editor"
@@ -75,7 +76,7 @@ This is the foundation for role-based access control (RBAC).
 - Set "Minimum password length" to 12 characters
 - Confirmed changes apply to all domain users
 **My Thinking:** Password policy is a critical security control. By enforcing 12-character minimum passwords domain-wide, I ensure users can't choose weak passwords like "Password1". This Group Policy applies to all user accounts in the domain automatically. A longer password makes brute-force attacks exponentially harder.
-![[verify.png]]
+<img width="1004" height="878" alt="image" src="https://github.com/user-attachments/assets/503a9dbf-58e3-45db-89e7-00c564c82fbc" />
 **What I Did:**
 - Opened PowerShell as Administrator
 - Ran `Get-ADUser jdoe` to verify user creation
